@@ -9,13 +9,19 @@
 | making use of the inbuilt graphics methods in VGA mode.                    |
 * --------------------------------------------------------------------------*/
 
+// header files
 #include<graphics.h>
 #include<conio.h>
 #include<dos.h>
 void main()
 {
- int gdriver = 9, gmode = 2; // set graphics mode to VGA - 640 x 480
- char path[] = "C:\\TURBOC3\\BGI"; // path might vary depending on your installation
+ // set graphics mode to VGA - 640 x 480 
+ int gdriver = 9, gmode = 2;
+
+ // path might vary depending on your installation
+ char path[] = "C:\\TURBOC3\\BGI";
+
+ // initialize the graphics mode
  initgraph(&gdriver, &gmode, path);
 
  //coordinate variables
@@ -23,32 +29,35 @@ void main()
  int xc = getmaxx()*0.5, yc = getmaxy()*2/3, radius = 24;
 
  // color data
- int col[] = {0, 13, 9, 11, 10, 14, 12, 4}, index = 0;
+ int palette[] = {0, 13, 9, 11, 10, 14, 12, 4}, index = 0;
 
  // introduction
+ // adjust text formatting and color
  settextjustify(CENTER_TEXT, CENTER_TEXT);
  settextstyle(SIMPLEX_FONT, HORIZ_DIR, 5);
  setcolor(getmaxcolor());
+ 
+ // print text
  outtextxy(midx, midy-20, "Rainbow");
  outtextxy(midx, midy+20, "by Toast");
- delay(3000);
+ delay(3000); // wait 3 seconds
  cleardevice();
 
  // draw the rainbow
  while(radius <= 200)
  {
   radius++;
-  setcolor(col[index]);
-  arc(xc, yc, 0, 180, radius);
-  delay(50);
-  if(!(radius%25)) //change the colour every 25 radius incrememnts
+  setcolor(palette[index]);
+  arc(xc, yc, 0, 180, radius); // draw an arc of 180 degrees
+  delay(50); // wait 50 miilseconds
+  if(!(radius%25)) // at every 25 radius incrememnts
   {
-   index++;
-   index %= 8;
+   index++; // change the color
+   index %= 8; // stay within palette bounds
    if(!index) break;
   }
  }
- delay(3000);
+ delay(3000); // wait 3 seconds
 
  // clear the rainbow slowly
  radius = 0;
@@ -57,9 +66,9 @@ void main()
   radius++;
   setcolor(0); // black
   arc(xc, yc, 0, 180, radius);
-  delay(25);
+  delay(25); // wait 25 milliseconds
  }
- delay(500);
+ delay(500); // wait hallf a second
 
  // thank you
  setcolor(getmaxcolor());
@@ -67,8 +76,10 @@ void main()
  outtextxy(midx, midy-20, "Thanks for watching!");
 
  settextstyle(SIMPLEX_FONT, HORIZ_DIR, 2);
- outtextxy(midx, midy+50, "Source code is available at https://github.com/CrunchytheToast");
- delay(10000);
+ outtextxy(midx, midy+30, "Source code is available here:");
+ outtextxy(midx, midy+55, "https://github.com/CrunchytheToast/RainbowCPP");
+ delay(10000); // wait 10 seconds
 
  closegraph();
+
 }
